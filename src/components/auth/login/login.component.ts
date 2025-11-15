@@ -14,6 +14,7 @@ import { AuthService } from '../../../services/auth.service';
 export class LoginComponent {
   // Fix: Explicitly type FormBuilder to resolve 'unknown' type inference
   private fb: FormBuilder = inject(FormBuilder);
+  private authService = inject(AuthService); // Fix: Added missing AuthService injection
 
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],

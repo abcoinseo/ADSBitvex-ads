@@ -13,7 +13,7 @@ import { filter, map, switchMap } from 'rxjs/operators'; // Import RxJS operator
   standalone: true,
   imports: [RouterLink, CommonModule],
   templateUrl: './advertiser-dashboard.component.html',
-  styleUrl: './advertiser-dashboard.component.css', // Fix: Corrected stylesheet path
+  styleUrl: './advertiser-dashboard.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdvertiserDashboardComponent {
