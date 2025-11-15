@@ -1,0 +1,36 @@
+
+<nav class="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 shadow-lg">
+  <div class="container mx-auto flex justify-between items-center">
+    <a routerLink="/" class="text-white text-3xl font-bold tracking-wider">
+      AdsBitvex
+    </a>
+
+    <div class="flex items-center space-x-6">
+      @if (!currentUser()) {
+        <a routerLink="/login" class="px-5 py-2 rounded-full text-white font-semibold bg-blue-500 hover:bg-blue-700 transition duration-300 ease-in-out shadow-md">
+          Login
+        </a>
+        <a routerLink="/register" class="px-5 py-2 rounded-full text-blue-100 font-semibold border-2 border-blue-300 hover:bg-blue-500 transition duration-300 ease-in-out shadow-md">
+          Register
+        </a>
+      } @else {
+        @if (userRole() === 'admin') {
+          <a routerLink="/admin" routerLinkActive="text-blue-200 border-b-2 border-blue-200" class="text-white hover:text-blue-200 transition duration-200">Admin Panel</a>
+        }
+        @if (userRole() === 'advertiser') {
+          <a routerLink="/advertiser" routerLinkActive="text-blue-200 border-b-2 border-blue-200" class="text-white hover:text-blue-200 transition duration-200">Advertiser Dashboard</a>
+          <a routerLink="/advertiser/create-campaign" routerLinkActive="text-blue-200 border-b-2 border-blue-200" class="text-white hover:text-blue-200 transition duration-200">Create Campaign</a>
+          <a routerLink="/advertiser/deposit" routerLinkActive="text-blue-200 border-b-2 border-blue-200" class="text-white hover:text-blue-200 transition duration-200">Deposit Funds</a>
+        }
+        @if (userRole() === 'publisher') {
+          <a routerLink="/publisher" routerLinkActive="text-blue-200 border-b-2 border-blue-200" class="text-white hover:text-blue-200 transition duration-200">Publisher Dashboard</a>
+          <a routerLink="/publisher/add-app" routerLinkActive="text-blue-200 border-b-2 border-blue-200" class="text-white hover:text-blue-200 transition duration-200">Add App</a>
+          <a routerLink="/publisher/withdraw" routerLinkActive="text-blue-200 border-b-2 border-blue-200" class="text-white hover:text-blue-200 transition duration-200">Withdraw Funds</a>
+        }
+        <button (click)="onLogout()" class="px-5 py-2 rounded-full text-white font-semibold bg-red-500 hover:bg-red-700 transition duration-300 ease-in-out shadow-md">
+          Logout <i class="material-icons text-base align-middle">logout</i>
+        </button>
+      }
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,5 @@
+{
+  "name": "AdsBitvex - Ad Network",
+  "description": "A comprehensive ad network platform for advertisers and publishers, powered by Angular and Firebase. Includes campaign management, ad display, deposits, withdrawals, and an admin panel.",
+  "requestFramePermissions": []
+}

@@ -1,0 +1,36 @@
+/*
+  No custom CSS needed for most elements as Tailwind handles styling.
+  The reward-header can have specific background-image if not using NgOptimizedImage directly for it.
+*/
+
+/* Custom styles for the reward header for better control or specific effects */
+.reward-header {
+  /* This ensures the gradient is behind the image, if an image is layered */
+  background-image: linear-gradient(to bottom right, #1f2937, #374151); /* Dark gradient */
+}
+
+/* If you want to use a specific background image for the header
+.reward-header {
+  background-image: url('https://images.unsplash.com/photo-1594240212903-8551a37c093a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.reward-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4); // Dark overlay
+  z-index: 0;
+}
+
+.reward-header > * {
+  position: relative;
+  z-index: 1;
+}
+*/

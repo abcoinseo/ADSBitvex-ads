@@ -1,0 +1,149 @@
+
+<div class="flex items-center justify-center py-8">
+  <div class="w-full max-w-2xl bg-white p-8 rounded-lg shadow-xl border border-gray-200">
+    <h2 class="text-3xl font-extrabold text-center text-gray-800 mb-6">
+      Create New Ad Campaign
+    </h2>
+    <p class="text-center text-gray-600 mb-8">
+      Design your ad, set your budget, and reach your target audience.
+    </p>
+
+    <form [formGroup]="campaignForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <div>
+        <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Campaign Title</label>
+        <input
+          id="title"
+          type="text"
+          formControlName="title"
+          class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 placeholder-gray-400"
+          placeholder="e.g., Launch My New Telegram Bot"
+        />
+        @if (campaignForm.controls.title.touched && campaignForm.controls.title.errors?.required) {
+          <p class="mt-2 text-sm text-red-600"><i class="material-icons text-base align-middle mr-1">error_outline</i>Campaign title is required.</p>
+        }
+      </div>
+
+      <div>
+        <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="3"
+          class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 placeholder-gray-400"
+          placeholder="Briefly describe your campaign objective and ad content."
+        ></textarea>
+        @if (campaignForm.controls.description.touched && campaignForm.controls.description.errors?.required) {
+          <p class="mt-2 text-sm text-red-600"><i class="material-icons text-base align-middle mr-1">error_outline</i>Description is required.</p>
+        }
+      </div>
+
+      <div>
+        <label for="totalImpressions" class="block text-sm font-medium text-gray-700 mb-2">Total Impressions (Min. 1000 for $1 CPM)</label>
+        <input
+          id="totalImpressions"
+          type="number"
+          formControlName="totalImpressions"
+          min="1000"
+          class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 placeholder-gray-400"
+        />
+        @if (campaignForm.controls.totalImpressions.touched && campaignForm.controls.totalImpressions.errors?.required) {
+          <p class="mt-2 text-sm text-red-600"><i class="material-icons text-base align-middle mr-1">error_outline</i>Total impressions is required.</p>
+        } @else if (campaignForm.controls.totalImpressions.touched && campaignForm.controls.totalImpressions.errors?.min) {
+          <p class="mt-2 text-sm text-red-600"><i class="material-icons text-base align-middle mr-1">error_outline</i>Minimum impressions is 1000.</p>
+        }
+      </div>
+
+      <div>
+        <label for="cpcBid" class="block text-sm font-medium text-gray-700 mb-2">Cost Per Click (CPC) Bid ($)</label>
+        <input
+          id="cpcBid"
+          type="number"
+          formControlName="cpcBid"
+          min="0.01"
+          step="0.01"
+          class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 placeholder-gray-400"
+          placeholder="e.g., 0.05"
+        />
+        @if (campaignForm.controls.cpcBid.touched && campaignForm.controls.cpcBid.errors?.required) {
+          <p class="mt-2 text-sm text-red-600"><i class="material-icons text-base align-middle mr-1">error_outline</i>CPC Bid is required.</p>
+        } @else if (campaignForm.controls.cpcBid.touched && campaignForm.controls.cpcBid.errors?.min) {
+          <p class="mt-2 text-sm text-red-600"><i class="material-icons text-base align-middle mr-1">error_outline</i>CPC Bid must be at least $0.01.</p>
+        }
+      </div>
+
+      <div>
+        <label for="adBannerUrl" class="block text-sm font-medium text-gray-700 mb-2">Ad Banner Image URL</label>
+        <input
+          id="adBannerUrl"
+          type="url"
+          formControlName="adBannerUrl"
+          class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 placeholder-gray-400"
+          placeholder="https://example.com/your-ad-banner.jpg"
+        />
+        @if (campaignForm.controls.adBannerUrl.touched && campaignForm.controls.adBannerUrl.errors?.required) {
+          <p class="mt-2 text-sm text-red-600"><i class="material-icons text-base align-middle mr-1">error_outline</i>Ad banner URL is required.</p>
+        } @else if (campaignForm.controls.adBannerUrl.touched && campaignForm.controls.adBannerUrl.errors?.pattern) {
+          <p class="mt-2 text-sm text-red-600"><i class="material-icons text-base align-middle mr-1">error_outline</i>Invalid URL format.</p>
+        }
+      </div>
+
+      <div>
+        <label for="buttonText" class="block text-sm font-medium text-gray-700 mb-2">Call-to-Action Button Text</label>
+        <input
+          id="buttonText"
+          type="text"
+          formControlName="buttonText"
+          class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 placeholder-gray-400"
+          placeholder="e.g., Install Now"
+        />
+        @if (campaignForm.controls.buttonText.touched && campaignForm.controls.buttonText.errors?.required) {
+          <p class="mt-2 text-sm text-red-600"><i class="material-icons text-base align-middle mr-1">error_outline</i>Button text is required.</p>
+        }
+      </div>
+
+      <div>
+        <label for="buttonUrl" class="block text-sm font-medium text-gray-700 mb-2">Call-to-Action Button URL</label>
+        <input
+          id="buttonUrl"
+          type="url"
+          formControlName="buttonUrl"
+          class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-gray-900 placeholder-gray-400"
+          placeholder="https://example.com/your-product"
+        />
+        @if (campaignForm.controls.buttonUrl.touched && campaignForm.controls.buttonUrl.errors?.required) {
+          <p class="mt-2 text-sm text-red-600"><i class="material-icons text-base align-middle mr-1">error_outline</i>Button URL is required.</p>
+        } @else if (campaignForm.controls.buttonUrl.touched && campaignForm.controls.buttonUrl.errors?.pattern) {
+          <p class="mt-2 text-sm text-red-600"><i class="material-icons text-base align-middle mr-1">error_outline</i>Invalid URL format.</p>
+        }
+      </div>
+
+      @if (errorMessage()) {
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md relative" role="alert">
+          <strong class="font-bold">Error!</strong>
+          <span class="block sm:inline ml-2">{{ errorMessage() }}</span>
+        </div>
+      }
+
+      @if (successMessage()) {
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-md relative" role="alert">
+          <strong class="font-bold">Success!</strong>
+          <span class="block sm:inline ml-2">{{ successMessage() }}</span>
+        </div>
+      }
+
+      <button
+        type="submit"
+        [disabled]="loading()"
+        class="w-full flex justify-center items-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-lg font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300 ease-in-out"
+      >
+        @if (loading()) {
+          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        }
+        Create Campaign
+      </button>
+    </form>
+  </div>
+</div>

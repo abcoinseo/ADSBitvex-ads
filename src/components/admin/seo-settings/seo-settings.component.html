@@ -1,0 +1,102 @@
+
+<div class="p-6 bg-white rounded-lg shadow-md">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">SEO Settings</h2>
+  <p class="text-gray-600 mb-6">Manage global SEO settings for your ad network platform.</p>
+
+  @if (errorMessage()) {
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md relative mb-4" role="alert">
+      <strong class="font-bold">Error!</strong>
+      <span class="block sm:inline ml-2">{{ errorMessage() }}</span>
+    </div>
+  }
+  @if (successMessage()) {
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-md relative mb-4" role="alert">
+      <strong class="font-bold">Success!</strong>
+      <span class="block sm:inline ml-2">{{ successMessage() }}</span>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="text-center py-8">
+      <svg class="animate-spin h-10 w-10 text-indigo-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      <p class="mt-4 text-gray-600">Loading settings...</p>
+    </div>
+  } @else {
+    <form [formGroup]="seoSettingsForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <div>
+        <label for="siteTitle" class="block text-sm font-medium text-gray-700">Site Title</label>
+        <input
+          id="siteTitle"
+          type="text"
+          formControlName="siteTitle"
+          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+          placeholder="Your Website Title"
+        />
+        @if (seoSettingsForm.controls.siteTitle.touched && seoSettingsForm.controls.siteTitle.errors?.required) {
+          <p class="mt-1 text-sm text-red-600">Site Title is required.</p>
+        }
+      </div>
+
+      <div>
+        <label for="metaDescription" class="block text-sm font-medium text-gray-700">Meta Description</label>
+        <textarea
+          id="metaDescription"
+          formControlName="metaDescription"
+          rows="3"
+          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+          placeholder="A brief and engaging description of your website for search engines."
+        ></textarea>
+        @if (seoSettingsForm.controls.metaDescription.touched && seoSettingsForm.controls.metaDescription.errors?.required) {
+          <p class="mt-1 text-sm text-red-600">Meta Description is required.</p>
+        }
+      </div>
+
+      <div>
+        <label for="keywords" class="block text-sm font-medium text-gray-700">Keywords</label>
+        <input
+          id="keywords"
+          type="text"
+          formControlName="keywords"
+          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+          placeholder="comma, separated, keywords"
+        />
+        @if (seoSettingsForm.controls.keywords.touched && seoSettingsForm.controls.keywords.errors?.required) {
+          <p class="mt-1 text-sm text-red-600">Keywords are required.</p>
+        }
+      </div>
+
+      <div>
+        <label for="ogImageUrl" class="block text-sm font-medium text-gray-700">Open Graph Image URL</label>
+        <input
+          id="ogImageUrl"
+          type="url"
+          formControlName="ogImageUrl"
+          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+          placeholder="https://example.com/social-share-image.jpg"
+        />
+        @if (seoSettingsForm.controls.ogImageUrl.touched && seoSettingsForm.controls.ogImageUrl.errors?.required) {
+          <p class="mt-1 text-sm text-red-600">Open Graph Image URL is required.</p>
+        } @else if (seoSettingsForm.controls.ogImageUrl.touched && seoSettingsForm.controls.ogImageUrl.errors?.pattern) {
+          <p class="mt-1 text-sm text-red-600">Invalid URL format.</p>
+        }
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="loading()"
+        class="inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        @if (loading()) {
+          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        }
+        Save SEO Settings
+      </button>
+    </form>
+  }
+</div>

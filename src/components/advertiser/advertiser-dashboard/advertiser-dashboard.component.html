@@ -1,0 +1,77 @@
+<div class="p-6 bg-white rounded-lg shadow-md">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Advertiser Dashboard</h1>
+    <div class="space-x-4">
+      <a routerLink="/advertiser/create-campaign" class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200 flex items-center">
+        <i class="material-icons mr-2 text-lg">add_circle_outline</i> Create New Campaign
+      </a>
+      <a routerLink="/advertiser/deposit" class="px-5 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-200 flex items-center">
+        <i class="material-icons mr-2 text-lg">account_balance_wallet</i> Deposit Funds
+      </a>
+    </div>
+  </div>
+
+  <div class="bg-indigo-50 border-l-4 border-indigo-400 p-4 mb-6 rounded-md">
+    <h3 class="text-lg font-semibold text-indigo-800 flex items-center mb-2">
+      <i class="material-icons text-xl mr-2">account_balance</i> Your Current Balance
+    </h3>
+    <p class="text-indigo-700 text-2xl font-bold">${{ advertiserBalance() | number:'1.2-2' }}</p>
+  </div>
+
+  @if (loading()) {
+    <div class="text-center py-8">
+      <svg class="animate-spin h-10 w-10 text-indigo-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      <p class="mt-4 text-gray-600">Loading campaigns...</p>
+    </div>
+  } @else if (error()) {
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md relative my-4" role="alert">
+      <strong class="font-bold">Error!</strong>
+      <span class="block sm:inline ml-2">{{ error() }}</span>
+    </div>
+  } @else if (campaigns().length === 0) {
+    <div class="text-center py-10 bg-gray-50 rounded-lg border border-dashed border-gray-300">
+      <i class="material-icons text-6xl text-gray-400 mb-4">campaign_off</i>
+      <p class="text-xl text-gray-600 mb-4">No campaigns created yet.</p>
+      <a routerLink="/advertiser/create-campaign" class="px-6 py-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition duration-200 flex items-center mx-auto w-fit">
+        <i class="material-icons mr-2 text-lg">add_box</i> Start Your First Campaign
+      </a>
+    </div>
+  } @else {
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (campaign of campaigns(); track campaign.id) {
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+          <img [src]="campaign.adBannerUrl || 'https://picsum.photos/400/200'" alt="Ad Banner" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ campaign.title }}</h3>
+            <p class="text-gray-600 text-sm mb-4">{{ campaign.description }}</p>
+
+            <div class="flex justify-between items-center text-sm text-gray-700 mb-2">
+              <span><i class="material-icons text-base align-middle mr-1">visibility</i> {{ campaign.currentImpressions | number }} / {{ campaign.totalImpressions | number }} Impressions</span>
+              <span class="font-medium text-indigo-600">${{ campaign.cpm }} CPM</span>
+            </div>
+            <div class="flex justify-between items-center text-sm text-gray-700 mb-2">
+              <span><i class="material-icons text-base align-middle mr-1">ads_click</i> {{ campaign.currentClicks | number }} Clicks</span>
+              <span class="font-medium text-indigo-600">${{ campaign.cpcBid | number:'1.2-2' }} CPC Bid</span>
+            </div>
+
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+              <div class="bg-blue-600 h-2.5 rounded-full" [style.width]="getProgressBarWidth(campaign)"></div>
+            </div>
+
+            <div class="flex justify-between items-center text-sm text-gray-700 mb-4">
+              <span>Status: <span [class]="{'text-green-600': campaign.status === 'active', 'text-yellow-600': campaign.status === 'paused', 'text-red-600': campaign.status === 'completed'}">{{ campaign.status | titlecase }}</span></span>
+              <span>Created: {{ campaign.createdAt | date:'shortDate' }}</span>
+            </div>
+
+            <a [href]="campaign.buttonUrl" target="_blank" class="block w-full text-center px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition duration-200 text-sm">
+              {{ campaign.buttonText }} <i class="material-icons text-base align-middle ml-1">open_in_new</i>
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
